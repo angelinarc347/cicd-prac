@@ -1,0 +1,21 @@
+name: Windows CI Echo
+
+on:
+  push: {}
+
+jobs:
+  run-echo-script:
+    name: Run echo script (Windows)
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Create PowerShell script
+        run: |
+          New-Item -Path scripts -ItemType Directory -Force
+          Set-Content -Path scripts\print-message.ps1 -Value 'Write-Output "cicd pipelines executed successfully"'
+
+      - name: Run the script
+        run: PowerShell -File scripts\print-message.ps1
